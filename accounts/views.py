@@ -22,7 +22,8 @@ def login(request):
 
 @login_required
 def logout(request):
-    auth_logout(request)
+    if request.user.is_authenticated:
+       auth_logout(request)
     return redirect('reviews:index')
 
 def signup(request):

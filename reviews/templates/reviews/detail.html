@@ -2,4 +2,15 @@
 
 {% block content %}
 <h1>Detail</h1>
+{{ review.pk }}
+{{ review.user }}
+{{ review.title }}
+{{ review.content }}
+{{ review.movie }}
+<a href="{% url 'reviews:index' %}">홈</a>
+<a href="{% url 'reviews:update' review.pk %}">수정</a>
+<form action="{% url 'reviews:delete' review.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="삭제">
+</form>
 {% endblock content %}
