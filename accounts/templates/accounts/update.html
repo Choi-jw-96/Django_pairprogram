@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{% url 'accounts:update' %}" method = "POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="d-flex justify-content-center">
+        <input type="submit" value = "수정">
+    </div>
+</form>
+{% endblock content %}
