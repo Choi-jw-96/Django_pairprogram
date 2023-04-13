@@ -3,5 +3,19 @@
 {% block content %}
 <h1>INDEX</h1>
 
-{% comment %} <a href="{% url 'reviews:login' %}">로그인</a> {% endcomment %}
+<a href="{% url 'accounts:login' %}">로그인</a>
+<a href="{% url 'accounts:signup' %}">회원가입</a>
+<a href="{% url 'accounts:update' %}">수정</a>
+<form class="text-white" action="{% url 'accounts:logout' %}" method = "POST">
+    {% csrf_token %}
+    <input class="btn btn-outline-primary" type="submit" value="로그아웃">
+</form>
+<a href="{% url 'reviews:create' %}">리뷰 작성</a>
+
+{% for review in reviews %}
+    {{ review.pk }}
+    {{ review.user.username }}
+    {{ review.movie }}
+    {{ review.title }}
+{% endfor %}
 {% endblock content %}
