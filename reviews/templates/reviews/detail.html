@@ -13,4 +13,19 @@
     {% csrf_token %}
     <input type="submit" value="삭제">
 </form>
+<hr>
+<form action="{% url 'reviews:create_comment' review.pk%}" method="POST">
+  {% csrf_token %}
+  {{ comment_form.as_p }}
+  <input type="submit" value="작성">
+</form>
+<hr>
+{% for comment in comments %}
+  {{ comment.user }}
+  {{ comment.content }}
+  <form action="{% url 'reviews:delete_comment' review.pk comment.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="삭제">
+  </form>
+{% endfor %}
 {% endblock content %}

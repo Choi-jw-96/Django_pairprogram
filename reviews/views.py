@@ -31,8 +31,12 @@ def create(request):
 
 def detail(request, review_pk):
     review = Review.objects.get(pk=review_pk)
+    comments = review.comment_set.all()
+    comment_form = CommentForm()
     context = {
         'review': review,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'reviews/detail.html', context)
 
@@ -63,3 +67,27 @@ def delete(request, review_pk):
     if request.user == review.user:
         review.delete()
     return redirect('reviews:index')
+
+
+def create_comment(request, review_pk):
+    review = Review.objects.get(pk=review_pk)
+    comment_form = CommentForm(request.POST)
+
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.review = review
+        comment.user = request.user
+        comment.save()
+        return redirect('reviews:detail', review.pk)
+    context = {
+        'review': review,
+        'comment_form': comment_form,
+    }
+    return render(request, 'reviews/index.html', context)
+
+
+def delete_comment(request, review_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        comment.delete()
+        return redirect('reviews:detail', review_pk)
