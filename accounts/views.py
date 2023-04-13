@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login, logout as auth_logout, update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 def login(request):
@@ -77,3 +78,13 @@ def change_password(request):
         'form': form,
     }
     return render(request, 'accounts/change_password.html', context)
+
+
+@login_required
+def profile(request, user_pk):
+    user = get_user_model().objects.get(pk=user_pk)
+    context = {
+        'user': user,
+    }
+    return render(request, 'accounts/profile.html', context)
+    
