@@ -69,6 +69,7 @@ def delete(request, review_pk):
     return redirect('reviews:index')
 
 
+@login_required
 def create_comment(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     comment_form = CommentForm(request.POST)
@@ -86,6 +87,7 @@ def create_comment(request, review_pk):
     return render(request, 'reviews/index.html', context)
 
 
+@login_required
 def delete_comment(request, review_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     if request.user == comment.user:
