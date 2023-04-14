@@ -4,6 +4,8 @@ from django.contrib.auth import login as auth_login, logout as auth_logout, upda
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from reviews.forms import Review
+
 
 # Create your views here.
 def login(request):
@@ -83,8 +85,10 @@ def change_password(request):
 @login_required
 def profile(request, user_pk):
     user = get_user_model().objects.get(pk=user_pk)
+    reviews = Review.objects.all()
     context = {
         'user': user,
+        'reviews': reviews
     }
     return render(request, 'accounts/profile.html', context)
     

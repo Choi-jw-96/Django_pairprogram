@@ -1,4 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
   <h1>{{ user }} 님의 프로필 페이지</h1>
+  <hr>
+  <div>
+    회원이름 : {{ user.first_name }}{{ user.last_name }}
+  </div>
+  <div>
+    회원이메일 : {{ user.email }}
+  </div>
+  <div>
+    작성한 후기목록 : 
+    {% for review in reviews %}
+      {% if review.user == request.user %}
+        {{ review.title }}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
 {% endblock content %}
