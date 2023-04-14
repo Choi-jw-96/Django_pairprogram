@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login, logout as auth_logout, update_session_auth_hash
-from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .forms import CustomUserChangeForm, CustomUserCreationForm, CustomUserAuthenticationForm, CustomUserPasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from reviews.forms import Review
@@ -12,12 +11,12 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('reviews:index')
     if request.method == 'POST':
-        form = AuthenticationForm(request ,request.POST)
+        form = CustomUserAuthenticationForm(request ,request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
             return redirect('reviews:index')
     else:
-        form = AuthenticationForm()
+        form = CustomUserAuthenticationForm()
     context = {
         'form' : form
       }
@@ -69,13 +68,13 @@ def update(request):
 @login_required
 def change_password(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomUserPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
             return redirect('reviews:index')
     else:
-        form = PasswordChangeForm(request.user)
+        form = CustomUserPasswordChangeForm(request.user)
     context = {
         'form': form,
     }
