@@ -87,19 +87,6 @@
     </div>
   </div>
   <hr>
-  <div class="ms-5 me-5 d-flex justify-content-start">
-    <form class="d-flex justify-content-start" action="{% url 'reviews:create_comment' review.pk%}" method="POST">
-      {% csrf_token %}
-      {{ comment_form.as_p }}
-      <div class="ms-3 d-flex justify-content-center align-self-center">
-        <input class="d-flex justify-content-center btn btn-success" style="width:58px; height:38px;" type="submit" value="작성">
-      </div>
-    </form>
-  </div>
-  <hr>
-  <div class="mb-4 me-5 d-flex justify-content-end" style="color:#198754">
-    댓글 수 : ({{ comments | length }})
-</div>
   <div class="mt-3 ms-5 d-flex justify-content-start">
     <ul>
       <div>
@@ -129,5 +116,20 @@
       </div>
     </ul>
   </div>
+  <hr>
+  <div class="ms-5 me-5 d-flex justify-content-start">
+    <form class="d-flex justify-content-start" action="{% url 'reviews:create_comment' review.pk%}" method="POST">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <div class="ms-3 d-flex justify-content-center align-self-center">
+        <input class="d-flex justify-content-center btn btn-success" style="width:58px; height:38px;" type="submit" value="작성">
+      </div>
+    </form>
+
+  </div>
+  <hr>
+  <div class="mb-4 me-5 d-flex justify-content-end" style="color:#198754">
+    댓글 수 : ({{ comments | length }})
+</div>
 </div>
 {% endblock content %}
