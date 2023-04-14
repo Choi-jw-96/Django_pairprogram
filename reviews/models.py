@@ -12,7 +12,7 @@ class Review(models.Model):
     movie = models.CharField(max_length=80)
     image = ProcessedImageField(blank = True,
                                 upload_to='image/',
-                                processors=[ResizeToFill(300, 300)],
+                                processors=[ResizeToFill(190, 200)],
                                 format='JPEG',
                                 options={'quality': 60})
 

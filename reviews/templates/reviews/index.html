@@ -1,25 +1,44 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h1>INDEX</h1>
-{% if request.user.is_authenticated %}
-<h2><a href="{% url 'accounts:profile' user.pk %}">{{ user }}</a>님 안녕하세요! </h2>
-    <form class="text-white" action="{% url 'accounts:logout' %}" method = "POST">
-        {% csrf_token %}
-        <input class="btn btn-outline-primary" type="submit" value="로그아웃">
-    </form>
-    <a href="{% url 'accounts:update' %}">수정</a>
-    <a href="{% url 'reviews:create' %}">리뷰 작성</a>
-{% else %}
-    <a href="{% url 'accounts:login' %}">로그인</a>
-    <a href="{% url 'accounts:signup' %}">회원가입</a>
-{% endif %}
+{% load static %}
 
-{% for review in reviews %}
-    {{ review.pk }}
-    {{ review.user.username }}
-    {{ review.movie }}
-    {{ review.title }}
-    <a href="{% url 'reviews:detail' review.pk%}">[더보기]</a>
-{% endfor %}
+{% block style %}
+<style>
+    .text{
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        font-weight: lighter
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+
+<article class='container'>
+    <h3>리뷰 목록</h3>
+    <div class='row'>
+        {% for review in reviews %}
+        <div class='col-6 col-md-4 col-lg-3 col-xxl-2'>
+        <div class="card m-2" style="width: 12rem;">
+                <a href="{% url 'reviews:detail' review.pk%}">
+                    {% if review.image %}
+                    <img class='mt-2' src=" {{review.image.url}} " alt="movie_img">
+                    {% else %}
+                    <img style="width: 190px; height: 200px;" src="{% static 'No_img.webp' %}" alt="no_img">
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                <h5 class="card-title">{{ review.title }}</h5>
+                <p class="card-text m-0">영화명 :{{ review.movie }}</p>
+                <p class="card-text m-0">작성자 : {{ review.user.username }}</p>
+                <p class="card-text m-0 text">{{ review.content }}</p>        
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</article>
 {% endblock content %}
