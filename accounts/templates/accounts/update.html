@@ -27,11 +27,11 @@
                 <label>이름</label>
                 {{ form.last_name }}
             </div>
-            <input type="submit" value='회원정보 수정' class="btn btn-success fw-bold  mb-5" style="width:100%; padding:20px; font-size: 22px;"> 
+            <input type="submit" value='회원정보 수정' class="btn btn-success fw-bold  mb-3" style="width:100%; padding:20px; font-size: 22px;"> 
+            <a class="change-password btn btn-success" style="width:100%; padding:20px; font-size: 22px;" on-click='func()' href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
         </form>
     </div>
     <div class='text-center'>
-        <a class="change-password" href="{% url 'accounts:change_password' %}">비밀번호 변경</a>
     </div>
 {% endblock content %}
 
